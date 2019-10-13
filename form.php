@@ -24,6 +24,8 @@
   <input type="text" name="phoneNumber">
 </form>
 
+<button type="submit" name="form-submit" class="btn btn-primary btn-block btn-lg"> submit </button>
+
 <p>Note that the form itself is not visible.</p>
 
 <p>Also note that the default width of a text input field is 20 characters.</p>

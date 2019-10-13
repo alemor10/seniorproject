@@ -1,5 +1,6 @@
 <html>
 <head>
+
 <title>Home page</title>
 </head>
 <body>
@@ -9,7 +10,15 @@
     require "header.php";
 ?>
 
-<p> hello </p>
+<div class="tab-nav-container">
+    <div >
+       
+    <a href="form.php" class="header-signup"> Form1 </a>
+    </div>
+
+</div>
+
+
 
 
 </body>
