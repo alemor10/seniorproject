@@ -1,3 +1,9 @@
+<?php
+    session_start();
+
+?>
+
+
 <!DOCTYPE html> 
 <html>
 
@@ -110,7 +116,35 @@ width: 20px;
                         <li class="menutop"><a class="menutop" href="#contact">Contact</a></li>
                         <li class="menutop"><a class="menutop" href="#about">About</a></li>
                  </ul>
-        </nav>    
+   
+        </nav> 
+    <div class="header-login">
+        <?php
+
+            if (isset($_SESSION['userID']))
+            {
+                echo '
+                    <form action="includes/logout.inc.php" method="post">
+                    <button type="submit" name="logout-submit"> Logout Button</button>
+                    </form>
+                    <a href="includes/logout.inc.php" class="header-signup"> Logout </a>
+                    ';
+            }
+            else 
+            {
+                echo '
+                    <form action="includes/logout.inc.php" method="post">
+                    <input type="text" name="email" placeholder="E-mail / Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <button type=submit name=login-submit"> Login </button>
+                    </form>
+                    <a href="login.php" class="header-signup"> Sign In</a>
+                    ';
+
+            }           
+
+            ?> 
+    </div>
 
     </header>
 </body>
