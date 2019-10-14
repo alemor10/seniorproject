@@ -10,7 +10,7 @@
 
 <h2>First Form </h2>
 
-<form>
+<form action="includes/form.inc.php" method="post">
   First name:<br>
   <input type="text" name="firstname">
   <br>
@@ -22,9 +22,11 @@
   <br>
   Phone Number:<br>
   <input type="text" name="phoneNumber">
-</form>
+  <div class="form-group">
 
-<button type="submit" name="form-submit" class="btn btn-primary btn-block btn-lg"> submit </button>
+  <button type="submit" name="form-submit" class="btn btn-primary btn-block btn-lg"> submit </button>
+  </div>
+</form>
 
 <p>Note that the form itself is not visible.</p>
 
