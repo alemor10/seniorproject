@@ -28,7 +28,7 @@
             <p>Please complete and sign this form for authtorization to register for restricted supervision course
                 (Senior Project, Masters project or independent Study).Upon the approval of the department chair, a section
                 number and permission number will be issued to you. You must then register for the course through your "My Fresno State" portal. </p>
-            <p><a class="btn btn-secondary" href="forms/form.php" role="button">View Form &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="#" role="button">View Form &raquo;</a></p>
           </div>
           <div class="col-md-4">
             <h2>Form2</h2>

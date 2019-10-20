@@ -58,6 +58,12 @@
                   Contact Faculty
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="forms/accountinfoform.php">
+                  <span data-feather="user"></span>
+                  Account Information 
+                </a>
+              </li>
             </ul>
 
             
