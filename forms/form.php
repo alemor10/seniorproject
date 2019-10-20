@@ -5,7 +5,7 @@
 <body>
 
 <?php
-    require "header.php";
+    require "../header.php";
 ?>
 
 <h2>First Form </h2>
