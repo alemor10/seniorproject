@@ -41,6 +41,7 @@ if(isset($_POST['login-submit'])){
                     $_SESSION['userID'] = $row['idUsers'];
                     $_SESSION['uidUsers'] = $row['usernameUsers'];
                     header("Location: ../dashboard.php?login=success");
+                    echo session_id();
                     exit();
 
                 }

@@ -1,3 +1,70 @@
+
+
+<?php
+session_start();
+require '../includes/database.inc.php';
+require_once '../formr/class.formr.php';
+// create our form object and use Bootstrap as our form wrapper
+$form = new Formr('bootstrap');
+
+
+// make all fields required
+$form->required = '*';
+
+$hold =$_SESSION['userID'];
+// check if the form has been submitted
+if($form->submit())
+{    
+    
+    // make sure our Message field has at least 10 characters
+    $form->validate('Telephone(min_length[10])');
+    $fname = $form->post('_first_name');
+    $lname = $form->post('_last_name');
+    $studentID = $form->post('_studentID');
+    $phoneNumber = $form->post('_telephone');
+    $sql = "SELECT idUsers FROM users where idUsers=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)) 
+    {
+      header("Location: accountinfoform.php?error=sqlerror");
+      exit();
+    }
+    else
+    {
+      mysqli_stmt_bind_param($stmt, "i",$hold);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_store_result($stmt);
+      $resultCheck = mysqli_stmt_num_rows($stmt);
+      if ($resultCheck > 1)
+      {
+        header("Location: accountinfoform.php?error=toomany");
+        exit();
+      }
+      else
+      {
+        $sql  = "INSERT INTO users ($hold) VALUES (?,?,?,?) ";
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql))
+        {
+            header("Location: accountinfoform.php?error=sqlerror4");
+            exit();
+        }
+        else
+        {
+            mysqli_stmt_bind_param($stmt, "ssii",$fname,$lname, $studentID,$phoneNumber);
+            mysqli_stmt_execute($stmt);
+            header("Location: accountinfoform.php?signup=success");
+            exit();
+        }
+      }
+    }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    $form->success_message('Thank you for filling out our form!');  
+}
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -25,54 +92,16 @@
         <p class="lead">Filling out the information below will reduce the time required for your future forms </p>
       </div>
 
+        <?php
+      // print messages, formatted using Bootstrap alerts
+      echo $form->messages();
+      echo $form->form_open();
+      echo $form->create('First name, Last name, student ID, Telephone');
+      echo $form->input_submit();
+      echo $form->form_close();
+      echo("{$_SESSION['userID']}");
+      ?>
 
-        <div class="container">
-          <h4 class="mb-3">Student Info</h4>
-          <form class="needs-validation" novalidate>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="firstName">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  Valid first name is required.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  Valid last name is required.
-                </div>
-              </div>
-            </div>
-
-
-            <div class="mb-3">
-              <label for="username">Student ID</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">#</span>
-                </div>
-                <input type="text" class="form-control" id="username" placeholder="ID " required>
-                <div class="invalid-feedback" style="width: 100%;">
-                  Your ID is required.
-                </div>
-              </div>
-            </div>
-
-
-
-            <div class="mb-3">
-              <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
-          </form>
         </div>
       </div>
 
@@ -86,27 +115,6 @@
     <script src="../../../../assets/js/vendor/popper.min.js"></script>
     <script src="../../../../dist/js/bootstrap.min.js"></script>
     <script src="../../../../assets/js/vendor/holder.min.js"></script>
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
 
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
   </body>
 </html>
