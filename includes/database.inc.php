@@ -1,18 +1,30 @@
 <?php
 
 
-$servername = "localhost";
 
-$dbUsername = "root";
+class Connection {
 
-$dbPassword = "";
+    private  $host  =  " localhost " ;
+    private  $dbname  =  "loginsystem" ;
+    private  $user  =  "localhost" ;
+    private  $password  =  "" ;
+    private  $connection  =  null ;
 
-$dbName = "loginsystem";
-
-$conn = mysqli_connect($servername,$dbUsername,$dbPassword,$dbName);
-
-if(!$conn) {
-    die("Connection failed: ".mysqli_connect_error());
+    public  function  getConnection () {
+        try {
+            $this -> connection  =  new  PDO (
+                                "mysql: host = $this->host ; dbname = $this->dbname " ,
+                                $this->user ,
+                                $this->password
+                                );
+        return  $this -> connection ;
+        } catch (Exception  $e ) {
+            echo  $e ->getMessage ();
+        } finally {
+            $this -> connection  =  null ;
+        }
+    }
 }
+
 
 ?>
